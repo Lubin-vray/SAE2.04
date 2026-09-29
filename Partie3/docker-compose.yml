@@ -1,0 +1,36 @@
+  version: '3.8'
+  services:
+    samba-final:
+      image: dperson/samba          # Image Samba prête à l’emploi
+      container_name: samba-ad-sae  # Nom du conteneur
+      hostname: samba-srv           # Nom d’hôte dans le conteneur
+      environment:
+        - TZ=Europe/Paris           # Fuseau horaire du conteneur
+      ports:
+        - "8139:139"                # Port SMB NetBIOS exposé sur l’hôte
+        - "8445:445"                # Port SMB principal exposé sur l’hôte
+      volumes:
+        - ./data:/partage           # Montage du dossier local data vers /partage
+      command:
+        - "-p"                      # Active le mode Samba avec prise en charge des utilisateurs
+        - "-w"                      # Définit le groupe de travail
+        - "WORKGROUP"               # Nom du workgroup Windows
+        - "-u"                      # Déclaration d’un utilisateur Samba
+        - "moi;Lubin2026"           # Utilisateur moi avec le mot de passe Lubin2026
+        - "-u"
+        - "toi;Lubin2026"           # Utilisateur toi avec le même mot de passe
+        - "-u"
+        - "nous;Lubin2026"          # Utilisateur nous avec le même mot de passe
+        - "-s"                      # Déclaration d’un partage Samba
+        - "public;/partage/public;yes;no;yes;all;none;;Dossier Public"   # Partage public accessible à tous
+        - "-s"
+        - "amoi;/partage/amoi;yes;yes;no;moi;none;moi;Dossier a moi"      # Partage amoi, accessible à moi seul
+        - "-s"
+        - "atoi;/partage/atoi;yes;yes;no;moi,toi;none;toi;Dossier a toi"   # Partage atoi, accessible à moi et toi
+        - "-s"
+        - "anous;/partage/anous;yes;yes;no;moi,toi,nous;none;nous;Dossier a nous"  # Partage anous, accessible aux trois utilisateurs
+        - "-s"
+        - "amoi-atoi;/partage/amoi-atoi;yes;yes;no;moi,toi;none;moi;Dossier echange amoi-atoi"  # Partage d’échange entre moi et toi
+        - "-s"
+        - "amoi-anous;/partage/amoi-anous;yes;yes;no;moi,nous;none;moi;Dossier echange amoi-anous"  # Partage d’échange entre moi et nous
+      restart: unless-stopped       # Redémarrage automatique du conteneur

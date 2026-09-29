@@ -1,0 +1,92 @@
+; /etc/asterisk/pjsip.conf
+[transport-udp]
+type=transport
+protocol=udp
+bind=0.0.0.0
+
+; --- TEMPLATES ---
+[artist-endpoint](!)
+type=endpoint
+context=internal
+disallow=all
+allow=alaw
+allow=ulaw
+auth=artist-auth
+aors=artist-aor
+
+[artist-auth](!)
+type=auth
+auth_type=userpass
+
+[artist-aor](!)
+type=aor
+max_contacts=1
+
+; --- ARTISTES ---
+; 200 - LEON ARDAVINCI
+[200](artist-endpoint)
+auth=auth200
+aors=200
+[auth200](artist-auth)
+password=1234
+username=200
+[200](artist-aor)
+
+; 201 - PAUL PICASSO
+[201](artist-endpoint)
+auth=auth201
+aors=201
+[auth201](artist-auth)
+password=1234
+username=201
+[201](artist-aor)
+
+; 202 - MICKAEL ANGELO
+[202](artist-endpoint)
+auth=auth202
+aors=202
+[auth202](artist-auth)
+password=mdp_mickael
+username=202
+[202](artist-aor)
+
+; 203 - SALVATORE DALIDA
+[203](artist-endpoint)
+auth=auth203
+aors=203
+[auth203](artist-auth)
+password=mdp_salvatore
+username=203
+[203](artist-aor)
+
+vice - LSB: Asterisk PBX.
+_config: rc_read_config: can't open /etc/radiusclient-ng/radiusclient.conf: No such file or directory
+_config: rc_read_config: can't open /etc/radiusclient-ng/radiusclient.conf: No such file or directory
+~i 29 13:06:36 debianlubin systemd[1]: Started asterisk.service - LSB: Asterisk PBX.
+mai 29 13:06:38 debianlubin asterisk[756]: radcli: rc_read_config: rc_read_config: can't open /etc/radiusclient-ng/radi>
+mai 29 13:06:38 debianlubin asterisk[756]: radcli: rc_read_config: rc_read_config: can't open /etc/radiusclient-ng/radi>
+mai 29 13:48:20 debianlubin systemd[1]: Stopping asterisk.service - LSB: Asterisk PBX...
+mai 29 13:48:20 debianlubin asterisk[1290]: Stopping Asterisk PBX: asterisk.
+mai 29 13:48:20 debianlubin systemd[1]: asterisk.service: Deactivated successfully.
+mai 29 13:48:20 debianlubin systemd[1]: asterisk.service: Unit process 756 (asterisk) remains running after unit stoppe>
+mai 29 13:48:20 debianlubin systemd[1]: Stopped asterisk.service - LSB: Asterisk PBX.
+mai 29 13:48:20 debianlubin systemd[1]: asterisk.service: Consumed 19.247s CPU time.
+mai 29 13:48:20 debianlubin systemd[1]: asterisk.service: Found left-over process 756 (asterisk) in control group while>
+mai 29 13:48:20 debianlubin systemd[1]: This usually indicates unclean termination of a previous run, or service implem>
+mai 29 13:48:20 debianlubin systemd[1]: Starting asterisk.service - LSB: Asterisk PBX...
+mai 29 13:48:20 debianlubin asterisk[1297]: Starting Asterisk PBX: asterisk.
+mai 29 13:48:20 debianlubin systemd[1]: Started asterisk.service - LSB: Asterisk PBX.
+mai 29 13:48:21 debianlubin asterisk[1309]: radcli: rc_read_config: rc_read_config: can't open /etc/radiusclient-ng/rad>
+mai 29 13:48:21 debianlubin asterisk[1309]: radcli: rc_read_config: rc_read_config: can't open /etc/radiusclient-ng/rad>
+mai 29 13:49:17 debianlubin asterisk[1393]: radcli: rc_read_config: rc_read_config: can't open /etc/radiusclient-ng/rad>
+mai 29 13:49:17 debianlubin asterisk[1393]: radcli: rc_read_config: rc_read_config: can't open /etc/radiusclient-ng/rad>
+-- Boot d47f6928e6ad4e80a1aaadea894b1ab1 --
+juin 01 10:50:25 debianlubin systemd[1]: Starting asterisk.service - LSB: Asterisk PBX...
+juin 01 10:50:25 debianlubin asterisk[733]: Starting Asterisk PBX: asterisk.
+juin 01 10:50:25 debianlubin systemd[1]: Started asterisk.service - LSB: Asterisk PBX.
+juin 01 10:50:27 debianlubin asterisk[755]: radcli: rc_read_config: rc_read_config: can't open /etc/radiusclient-ng/rad>
+juin 01 10:50:27 debianlubin asterisk[755]: radcli: rc_read_config: rc_read_config: can't open /etc/radiusclient-ng/rad>
+juin 01 14:24:53 debianlubin systemd[1]: Stopping asterisk.service - LSB: Asterisk PBX...
+juin 01 14:24:53 debianlubin asterisk[1185]: Stopping Asterisk PBX: asterisk.
+juin 01 14:24:53 debianlubin systemd[1]: asterisk.service: Deactivated successfully.
+juin 01 14:24:53 debianlubin systemd[1]: asterisk.service: Unit process 755 (asterisk) remains 

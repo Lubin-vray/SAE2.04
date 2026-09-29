@@ -1,0 +1,11 @@
+useradd moi root
+useradd toi root
+useradd nous root
+mkdir -p /share/public /share/amoi /share/atoi /share/anous /share/amoi-atoi /share/amoi-anous
+
+shareadd public "/share/public" "moi,toi,nous" "Dossier Public"
+shareadd amoi "/share/amoi" "moi,toi,nous" "Dossier a moi"
+shareadd atoi "/share/atoi" "moi,toi" "Dossier a toi"
+shareadd anous "/share/anous" "moi,toi,nous" "Dossier a nous"
+shareadd amoi-atoi "/share/amoi-atoi" "moi,toi" "Dossier echange amoi-atoi"
+shareadd amoi-anous "/share/amoi-anous" "moi,nous" "Dossier echange amoi-anous"

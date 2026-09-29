@@ -1,0 +1,113 @@
+import pygame
+import random
+import sys
+
+
+# PARAMÈTRES GÉNÉRAUX
+LARGEUR, HAUTEUR = 4000, 4800
+COULEUR_FOND = (234, 230, 226)
+COULEUR_TRAIT = (65, 64, 58)
+
+
+#EPAISSEUR_TRAIT  = int(float(sys.argv[1].replace(',', '.')))
+#NB_COLONNES      = int(float(sys.argv[2].replace(',', '.')))
+#NB_LIGNES        = int(float(sys.argv[3].replace(',', '.')))
+#NB_SEGMENTS      = int(float(sys.argv[4].replace(',', '.')))
+#pourcentage_diag = float(sys.argv[5].replace(',', '.'))
+#CHAOS            = float(sys.argv[6].replace(',', '.'))
+EPAISSEUR_TRAIT  = 5
+NB_COLONNES      = 10
+NB_LIGNES        = 15
+NB_SEGMENTS      = 25
+pourcentage_diag = 20
+CHAOS            = 0.2
+
+TAILLE_CASE = 250
+MARGE = 20
+
+
+def dessiner_une_figure(surface, x_case, y_case, taille, marge, epaisseur):
+
+
+    x_min = x_case + marge
+    x_max = x_case + taille - marge
+    y_min = y_case + marge
+    y_max = y_case + taille - marge
+
+
+    # Sécurité : si la case est trop petite on ne dessine rien
+    if x_min >= x_max or y_min >= y_max:
+        return
+
+
+    x = random.uniform(x_min, x_max)
+    y = random.uniform(y_min, y_max)
+    x_depart = x
+    y_depart = y
+    points = [(x, y)]
+
+
+    for i in range(NB_SEGMENTS):
+        tirage = random.randint(1, 100)
+
+
+        if tirage <= pourcentage_diag:
+            x = random.uniform(x_min, x_max)
+            y = random.uniform(y_min, y_max)
+            points.append((x, y))
+        else:
+            x = random.uniform(x_min, x_max)
+            points.append((x, y))
+            y = random.uniform(y_min, y_max)
+            points.append((x, y))
+
+
+    points.append((x_depart, y))
+    points.append((x_depart, y_depart))
+
+    pygame.draw.lines(surface, COULEUR_TRAIT, False, points, epaisseur)
+
+
+
+pygame.init()
+surface = pygame.Surface((LARGEUR, HAUTEUR))
+surface.fill(COULEUR_FOND)
+
+
+largeur_grille = NB_COLONNES * TAILLE_CASE
+hauteur_grille = NB_LIGNES * TAILLE_CASE
+decalage_x = (LARGEUR - largeur_grille) / 2
+decalage_y = (HAUTEUR - hauteur_grille) / 2
+
+
+for col in range(NB_COLONNES):
+    for ligne in range(NB_LIGNES):
+
+        # Calcul de la position de base de la case dans la grille
+        # (sans chaos, ce serait une grille parfaitement régulière)
+        x_base = decalage_x + col * TAILLE_CASE
+        y_base = decalage_y + ligne * TAILLE_CASE
+
+        # Ajout d'un décalage aléatoire sur X et Y pour "casser" la régularité
+        # Plus CHAOS est grand, plus les cases sont déplacées loin de leur position d'origine
+        decalage_aleatoire_x = random.uniform(-TAILLE_CASE * CHAOS, TAILLE_CASE * CHAOS)
+        decalage_aleatoire_y = random.uniform(-TAILLE_CASE * CHAOS, TAILLE_CASE * CHAOS)
+        x_case = x_base + decalage_aleatoire_x
+        y_case = y_base + decalage_aleatoire_y
+
+        # Variation aléatoire de la taille et de la marge de chaque figure
+        # La taille peut être légèrement plus petite ou bien plus grande selon CHAOS
+        # La marge varie aussi pour accentuer l'effet de désordre visuel
+        taille = TAILLE_CASE * random.uniform(1 - CHAOS * 0.8, 1 + CHAOS * 1.5)
+        marge  = random.uniform(MARGE * (1 - CHAOS), MARGE * (1 + CHAOS * 3))
+
+        # Dessin de la figure à la position et avec les dimensions calculées
+        dessiner_une_figure(surface, x_case, y_case, taille, marge, EPAISSEUR_TRAIT)
+
+# Sauvegarde finale
+pygame.image.save(surface, "oeuvre_4k_etudiant.png")
+print("Sauvegardée: oeuvre_4k_etudiant.png")
+
+
+pygame.quit()
+sys.exit()
